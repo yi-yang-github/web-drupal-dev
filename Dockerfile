@@ -25,8 +25,8 @@ RUN docker-php-ext-install pdo_mysql
 RUN pecl install redis && docker-php-ext-enable redis
 
 # Add Xdebug but not enabled it by default
-#RUN apt -qy install $PHPIZE_DEPS && pecl install xdebug-2.8.0
-RUN docker-php-ext-enable xdebug
+RUN apt -qy install $PHPIZE_DEPS && pecl install xdebug-2.9.5
+#RUN docker-php-ext-enable xdebug
 
 # Copy fake SSL certs for dev site.
 COPY ./config/ssl/ssl-cert-snakeoil.key /etc/ssl/private/ssl-cert-snakeoil.key
