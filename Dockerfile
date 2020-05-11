@@ -19,7 +19,11 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y mysql-client
 RUN docker-php-ext-install pdo_mysql
 
-# GD, opcache, pdo are enabled in upstream drupal dockerfile.
+# GD, opcache, pdo, zip are enabled in upstream drupal dockerfile.
+
+# PHP multilingual / intl
+RUN apt-get update && apt-get install -qq -y libicu-dev \
+    && docker-php-ext-install intl
 
 # Enable Redis
 RUN pecl install redis && docker-php-ext-enable redis
