@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     wget gnupg nano vim
 
 # Enable MySQL
-RUN apt-get update && apt-get install -y mysql-client
+RUN apt-get update && apt-get install -y default-mysql-client
 RUN docker-php-ext-install pdo_mysql
 
 # GD, opcache, pdo, zip are enabled in upstream drupal dockerfile.
