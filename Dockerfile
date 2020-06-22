@@ -15,6 +15,12 @@ RUN apt-get update && apt-get install -y \
     sudo \
     wget gnupg nano vim
 
+# Enable Redis
+RUN pecl install redis && docker-php-ext-enable redis
+
+# Install PHP PECL DBase extension for reading ESRI Shapefiles.
+RUN pecl install dbase && rm -rf /tmp/pear && docker-php-ext-enable dbase
+
 # Enable MySQL
 RUN apt-get update && apt-get install -y default-mysql-client
 RUN docker-php-ext-install pdo_mysql
@@ -24,9 +30,6 @@ RUN docker-php-ext-install pdo_mysql
 # PHP multilingual / intl
 RUN apt-get update && apt-get install -qq -y libicu-dev \
     && docker-php-ext-install intl
-
-# Enable Redis
-RUN pecl install redis && docker-php-ext-enable redis
 
 # Add Xdebug but not enabled it by default
 RUN apt -qy install $PHPIZE_DEPS && pecl install xdebug-2.9.5
