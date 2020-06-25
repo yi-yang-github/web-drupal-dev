@@ -81,7 +81,7 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
   && php -r "if (hash('SHA384', file_get_contents('/tmp/composer-setup.php')) !== trim(file_get_contents('/tmp/composer-setup.sig'))) { unlink('/tmp/composer-setup.php'); echo 'Invalid installer' . PHP_EOL; exit(1); }"
 
 # Install Composer
-RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=1.8.4 && rm -rf /tmp/composer-setup.php
+RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=1.10.8 && rm -rf /tmp/composer-setup.php
 
 # Display version information.
 RUN composer --version
