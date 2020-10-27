@@ -74,17 +74,20 @@ ENV PATH /composer/vendor/bin:$PATH
 
 # Allow Composer to be run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_HOME /tmp
+ENV COMPOSER_VERSION 2.0.2
 
 # Setup the Composer installer
-RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
-  && curl -o /tmp/composer-setup.sig https://composer.github.io/installer.sig \
-  && php -r "if (hash('SHA384', file_get_contents('/tmp/composer-setup.php')) !== trim(file_get_contents('/tmp/composer-setup.sig'))) { unlink('/tmp/composer-setup.php'); echo 'Invalid installer' . PHP_EOL; exit(1); }"
+RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/7bfcc5eaf3af1fe20e172a8676d2fb9bb8162d7e/web/installer -O - -q | php -- --quiet
+
+RUN mv installer.php /tmp
+
 
 # Install Composer
-RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=1.10.8 && rm -rf /tmp/composer-setup.php
-
-# Display version information.
-RUN composer --version
+RUN php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}; \
+  composer --ansi --version --no-interaction; \
+  rm -f /tmp/installer.php; \
+  find /tmp -type d -exec chmod -v 1777 {} +
 
 # Install Drush (PHP/Drupal)
 RUN composer global require drush/drush:9.*
