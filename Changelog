@@ -1,2 +1,6 @@
+Update on Oct 27, 2020:
+- add shellcheck (if you want to do coding style checkes on bash).
+
+
 Update on May 11, 2020:
 - initial build to using php7.3 (change base to official Drupal docker image).

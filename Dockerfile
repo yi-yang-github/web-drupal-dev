@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     sudo \
-    wget gnupg nano vim
+    wget gnupg nano vim shellcheck
 
 # Enable Redis
 RUN pecl install redis && docker-php-ext-enable redis
