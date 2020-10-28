@@ -78,16 +78,11 @@ ENV COMPOSER_HOME /tmp
 ENV COMPOSER_VERSION 2.0.2
 
 # Setup the Composer installer
-RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/7bfcc5eaf3af1fe20e172a8676d2fb9bb8162d7e/web/installer -O - -q | php -- --quiet
-
-RUN mv installer.php /tmp
+RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/7bfcc5eaf3af1fe20e172a8676d2fb9bb8162d7e/web/installer -O - -q | php -- --quiet && chmod a+x composer.phar && mv composer.phar /usr/bin/composer
 
 
-# Install Composer
-RUN php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION}; \
-  composer --ansi --version --no-interaction; \
-  rm -f /tmp/installer.php; \
-  find /tmp -type d -exec chmod -v 1777 {} +
+# Show Composer version
+RUN composer --ansi --version --no-interaction
 
 # Install Drush (PHP/Drupal)
 RUN composer global require drush/drush:9.*
