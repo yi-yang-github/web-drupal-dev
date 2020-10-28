@@ -66,11 +66,14 @@ RUN a2ensite 001-default-ssl
 # code from upstream.
 RUN rm -rf /var/www/html
 
-# See composer version, it should be installed by upstream drupal image already.
-RUN composer --ansi --version --no-interaction
+# Use the official composer image.
+COPY --from=composer:1.10 /usr/bin/composer /usr/local/bin/
 
-ENV COMPOSER_HOME /composer
-ENV PATH $COMPOSER_HOME/vendor/bin:$PATH
+ENV COMPOSER_HOME /tmp
+ENV PATH /tmp/vendor/bin:$PATH
+
+# See composer version.
+RUN composer --ansi --version --no-interaction
 
 # Install Drush (PHP/Drupal)
 RUN composer global require drush/drush:9.* && drush --version
