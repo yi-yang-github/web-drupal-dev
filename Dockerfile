@@ -66,27 +66,14 @@ RUN a2ensite 001-default-ssl
 # code from upstream.
 RUN rm -rf /var/www/html
 
-# Register the COMPOSER_HOME environment variable
-ENV COMPOSER_HOME /composer
-
-# Add global binary directory to PATH and make sure to re-export it
-ENV PATH /composer/vendor/bin:$PATH
-
-# Allow Composer to be run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV COMPOSER_HOME /tmp
-ENV COMPOSER_VERSION 2.0.2
-
-# Setup the Composer installer
-RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/7bfcc5eaf3af1fe20e172a8676d2fb9bb8162d7e/web/installer -O - -q | php -- --quiet && chmod a+x composer.phar && mv composer.phar /usr/bin/composer
-
-
-# Show Composer version
+# See composer version, it should be installed by upstream drupal image already.
 RUN composer --ansi --version --no-interaction
 
-# Install Drush (PHP/Drupal)
-RUN composer global require drush/drush:9.*
+ENV COMPOSER_HOME /composer
+ENV PATH $COMPOSER_HOME/vendor/bin:$PATH
 
+# Install Drush (PHP/Drupal)
+RUN composer global require drush/drush:9.* && drush --version
 
 # Install node from nodesource, newer verion required by yarn installation.
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
