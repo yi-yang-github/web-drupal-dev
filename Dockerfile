@@ -109,6 +109,8 @@ RUN apt-get install -y \
 RUN apt-get install -y \
     libasound2 \
     xvfb
+# Required for cypress > 5.0
+RUN apt-get install -y libgbm-dev
 
 WORKDIR /var/www
 
