@@ -97,9 +97,13 @@ RUN yarn global add cypress --dev && which cypress
 RUN cypress version
 
 # FROM https://github.com/cypress-io/cypress-docker-images/blob/master/base/ubuntu16/Dockerfile
+# and https://on.cypress.io/required-dependencies
+# apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+
 # Install Cypress dependencies (separate commands to avoid time outs)
+#  The libgbm-dev is required for cypress > 5.0
 RUN apt-get install -y \
-    libgtk2.0-0
+    libgtk2.0-0 libgtk-3-0 libgbm-dev
 RUN apt-get install -y \
     libnotify-dev
 RUN apt-get install -y \
@@ -108,9 +112,8 @@ RUN apt-get install -y \
     libxss1
 RUN apt-get install -y \
     libasound2 \
-    xvfb
-# Required for cypress > 5.0
-RUN apt-get install -y libgbm-dev
+    libxtst6 xauth xvfb
+
 
 WORKDIR /var/www
 
