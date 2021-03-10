@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y \
 # Enable Redis
 RUN pecl install redis && docker-php-ext-enable redis
 
+# Enable Sockets (for monolog / syslog)
+RUN docker-php-ext-install sockets
+
 # Install PHP PECL DBase extension for reading ESRI Shapefiles.
 RUN pecl install dbase && rm -rf /tmp/pear && docker-php-ext-enable dbase
 
