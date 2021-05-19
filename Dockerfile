@@ -70,7 +70,7 @@ RUN a2ensite 001-default-ssl
 RUN rm -rf /var/www/html
 
 # Use the official composer image.
-COPY --from=composer:1.10 /usr/bin/composer /usr/local/bin/
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/
 
 ENV COMPOSER_HOME /tmp
 ENV PATH /tmp/vendor/bin:$PATH
