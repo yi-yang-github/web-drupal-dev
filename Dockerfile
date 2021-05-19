@@ -82,7 +82,7 @@ RUN composer --ansi --version --no-interaction
 RUN composer global require drush/drush:9.* && drush --version
 
 # Install node from nodesource, newer verion required by yarn installation.
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
  && apt-get install -y nodejs
 
 # Add yarn (npm replacement)
